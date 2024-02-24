@@ -1,0 +1,27 @@
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import FAQScreen from "./FAQScreen";
+import Profile from "./ProfileScreen";
+import TabsOnHome from "../Tabs/TabNavigator";
+
+const Drawer = createDrawerNavigator();
+
+export default function HomeDrawer() {
+    return (
+        <Drawer.Navigator initialRouteName="TabsOnHome">
+            <Drawer.Screen
+                name={'Главная'}
+                component={TabsOnHome}
+                options={{headerShown: false}}
+            />
+            <Drawer.Screen
+                name={'Профиль'}
+                component={Profile}
+            />
+            <Drawer.Screen
+                name={'F.A.Q'}
+                component={FAQScreen}
+                options={{headerShown: false}}
+            />
+        </Drawer.Navigator>
+    );
+}
