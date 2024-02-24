@@ -1,0 +1,62 @@
+import React, {useState} from "react";
+import {
+    Image,
+    Text,
+    TextInput,
+    TouchableHighlight,
+    View,
+} from 'react-native';
+import {useFonts} from "expo-font";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from "../../styles/styles";
+
+const AuthorizationScreen = ({navigation}) => {
+    const [fontsLoaded] = useFonts({
+        'Monsterrat': require('../../assets/fonts/Montserrat-Regular.ttf'),
+    });
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const checkUserData = async () => {
+        try {
+            const storedEmail = await AsyncStorage.getItem('email');
+            const storedPassword = await AsyncStorage.getItem('password');
+
+            if (storedEmail === email && storedPassword === password) {
+                console.log('Пользователь успешно авторизован');
+                navigation.navigate('Home_screen');
+            } else {
+                console.log('Неверный email или пароль');
+            }
+        } catch (error) {
+            console.log('Ошибка при получении данных из AsyncStorage:', error);
+        }
+    };
+
+    return (
+        <View style={styles.main_border_auth}>
+
+            <Image source={require('../../assets/image/shaurma_lp74ijv9x3jh_512.png')} style={styles.shawarma_auth}/>
+            <Text style={styles.auth_hello_text}>Добро пожаловать</Text>
+            <Text style={styles.auth_p_text}>Создайте свой аккаунт</Text>
+
+            <TextInput style={styles.placeholder_auth1}
+                       placeholder={"Введите ваш e-mail"}
+                       textContentType={"emailAddress"}
+                       value={email}
+                       onChangeText={setEmail}
+            ></TextInput>
+
+            <TextInput style={styles.placeholder_auth2}
+                       placeholder={"Введите ваш пароль"}
+                       value={password}
+                       onChangeText={setPassword}
+            ></TextInput>
+
+            <TouchableHighlight onPress={checkUserData} style={styles.next_button_auth}>
+                <Text style={styles.next_button_text_auth}>Далее</Text>
+            </TouchableHighlight>
+        </View>
+    );
+}
+export default AuthorizationScreen;
