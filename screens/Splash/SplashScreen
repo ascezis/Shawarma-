@@ -1,0 +1,26 @@
+import React, { useEffect } from 'react';
+import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
+import styles from "../../styles/styles";
+import {useFonts} from "expo-font";
+
+const  SplashScreen = ({navigation}) => {
+    useFonts({
+        'Monsterrat': require('../../assets/fonts/Montserrat-Regular.ttf'),
+    });
+
+    useEffect(() => {
+        setTimeout(() => {
+            navigation.replace('Home_screen'); //Переадресация + время
+        }, 3000)
+    }, []);
+
+    return(
+        <View style={styles.welcome}>
+            <ImageBackground style={styles.welcome_img} source={require('../../assets/image/shaurma_lp74ijv9x3jh_512.png')}></ImageBackground>
+            <Text style={styles.welcome_form_text}>Express</Text>
+            <Text style={styles.welcome_slog}>Лучшая шаурма в городе</Text>
+        </View>
+    )
+}
+
+export default SplashScreen;
